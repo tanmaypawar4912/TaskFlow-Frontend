@@ -1,0 +1,12 @@
+import api from './api';
+import type { Theme, User } from '../types';
+export type AuthResult = { success:boolean; message:string; data?:{ user:User } };
+export const loginUser=async(data:{email:string;password:string}):Promise<AuthResult> => (await api.post<AuthResult>('/auth/login',data)).data;
+export const registerUser=async(data:{name:string;email:string;password:string}):Promise<AuthResult> => (await api.post<AuthResult>('/auth/register',data)).data;
+export const googleLoginUser=async(credential:string):Promise<AuthResult> => (await api.post<AuthResult>('/auth/google',{credential})).data;
+export const logoutUser=async()=>{await api.post('/auth/logout');};
+export const getCurrentUser=async()=> (await api.get<{success:boolean;data:{user:User}}>('/auth/me')).data.data.user;
+export const updateProfile=async(data:{name:string;avatar?:string})=> (await api.put<{success:boolean;data:{user:User}}>('/users/profile',data)).data.data.user;
+export const changePassword=async(data:{currentPassword:string;newPassword:string})=>{await api.put('/users/password',data);};
+export const getPreferences=async()=> (await api.get<{success:boolean;data:{preferences:{notifications:boolean;theme:Theme}}}>('/users/preferences')).data.data.preferences;
+export const updatePreferences=async(data:{notifications?:boolean;theme?:Theme})=> (await api.put<{success:boolean;data:{preferences:{notifications:boolean;theme:Theme}}}>('/users/preferences',data)).data.data.preferences;
