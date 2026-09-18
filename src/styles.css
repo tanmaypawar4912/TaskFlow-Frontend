@@ -171,3 +171,456 @@ select {
   .auth-switch { font-size: 15px; }
   .trust-row { font-size: 12px; }
 }
+
+/* ============================================================
+   TaskFlow Responsive Fit Patch
+   Purpose:
+   - Preserve existing UI, colors, components and functionality
+   - Fix viewport overflow/cropping on mobile
+   - Keep dashboard/layout fluid on laptops and large screens
+   - Improve auth row wrapping and form fit
+   ============================================================ */
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  -webkit-text-size-adjust: 100%;
+}
+
+.app-shell,
+.main,
+.page,
+.auth-shell,
+.auth-panel,
+.auth-card,
+.settings-shell,
+.settings-content,
+.dashboard-grid,
+.analytics-grid,
+.stat-grid {
+  min-width: 0;
+}
+
+/* Desktop: let the main area consume only the space available
+   beside the fixed sidebar, preventing accidental horizontal growth. */
+@media (min-width: 901px) {
+  .main {
+    width: calc(100% - 270px);
+    max-width: calc(100% - 270px);
+    min-width: 0;
+    margin-left: 270px;
+  }
+
+  .sidebar.collapsed ~ .main {
+    width: calc(100% - 82px);
+    max-width: calc(100% - 82px);
+    margin-left: 82px;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 1500px;
+  }
+
+  .desktop-header {
+    width: 100%;
+  }
+}
+
+/* Tablet / Mobile */
+@media (max-width: 900px) {
+  .main,
+  .sidebar.collapsed ~ .main {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-left: 0;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+  }
+
+  .page > *,
+  .topbar > *,
+  .dashboard-intro > *,
+  .panel-head > *,
+  .section-heading > *,
+  .full-task > *,
+  .task-title-line > *,
+  .task-row > *,
+  .setting-row > * {
+    min-width: 0;
+  }
+
+  .task-main,
+  .full-task-body,
+  .profile-text,
+  .setting-copy,
+  .panel-head > div {
+    min-width: 0;
+  }
+
+  .settings-nav {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .settings-nav button {
+    min-width: 0;
+  }
+}
+
+/* Small phones: 320px–640px */
+@media (max-width: 640px) {
+  .mobile-header {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .mobile-header .logo {
+    min-width: 0;
+  }
+
+  .mobile-header .logo > span:last-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .page {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  /* Prevent flex children from forcing the viewport wider. */
+  .topbar,
+  .dashboard-intro,
+  .auth-row,
+  .quote-strip,
+  .session-card,
+  .setting-row,
+  .pagination {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Auth form */
+  .auth-shell,
+  .auth-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .auth-panel {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+
+  .auth-card {
+    width: 100%;
+    max-width: 520px;
+    min-width: 0;
+  }
+
+  .auth-heading,
+  .auth-form,
+  .auth-switch,
+  .trust-row,
+  .divider,
+  .google-stack,
+  .google-button-wrap {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .auth-heading h2 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .auth-heading p {
+    max-width: 100%;
+  }
+
+  .auth-form label {
+    min-width: 0;
+  }
+
+  .password-wrap {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .password-wrap input {
+    width: 100%;
+    min-width: 0;
+    padding-right: 52px;
+  }
+
+  /* This was the main source of horizontal clipping on narrow phones. */
+  .auth-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    row-gap: 10px;
+  }
+
+  .check-row {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .text-btn {
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: right;
+  }
+
+  .trust-row {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .google-fallback {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  /* Tasks */
+  .task-toolbar,
+  .toolbar-actions {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .search-large {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .search-large input {
+    min-width: 0;
+  }
+
+  .filter-panel {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .filter-panel > * {
+    min-width: 0;
+  }
+
+  .full-task {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .task-title-line {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .task-title-line h3 {
+    width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .full-task-body > p {
+    overflow-wrap: anywhere;
+  }
+
+  .task-meta {
+    min-width: 0;
+  }
+
+  .task-meta span {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .action-menu {
+    max-width: calc(100vw - 28px);
+  }
+
+  /* Dashboard */
+  .stat-card,
+  .panel,
+  .quote-strip,
+  .task-panel,
+  .today-panel,
+  .progress-panel {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .stat-card strong,
+  .analytics-hero strong,
+  .page h1 {
+    max-width: 100%;
+  }
+
+  .analytics-hero,
+  .big-spark,
+  .week-chart {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .week-chart {
+    overflow: hidden;
+  }
+
+  .chart-day,
+  .chart-track {
+    min-width: 0;
+  }
+
+  /* Settings */
+  .settings-shell,
+  .settings-content,
+  .settings-section {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .section-title {
+    min-width: 0;
+  }
+
+  .section-title > div {
+    min-width: 0;
+  }
+
+  .section-title h2,
+  .section-title p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .theme-grid,
+  .security-badges {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .theme-option {
+    min-width: 0;
+  }
+
+  .profile-edit,
+  .profile-fields,
+  .password-form {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .session-card {
+    flex-wrap: wrap;
+  }
+
+  .session-card > * {
+    min-width: 0;
+  }
+
+  .modal-backdrop,
+  .command-backdrop {
+    padding:
+      max(12px, env(safe-area-inset-top))
+      max(12px, env(safe-area-inset-right))
+      max(12px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
+  }
+
+  .modal,
+  .command-dialog {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100vh - 24px);
+  }
+}
+
+/* Very narrow devices: 320px–359px */
+@media (max-width: 359px) {
+  .page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .auth-panel {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .auth-heading h2 {
+    font-size: 30px;
+    letter-spacing: -1.2px;
+  }
+
+  .auth-row {
+    align-items: flex-start;
+  }
+
+  .check-row {
+    flex-basis: 100%;
+  }
+
+  .text-btn {
+    margin-left: auto;
+  }
+
+  .settings-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-nav button {
+    justify-content: flex-start;
+  }
+}
+
+/* Safe handling for device notches / browser UI areas */
+@supports (padding: max(0px)) {
+  .auth-panel {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+}
+
+/* Prevent long words / emails / task text from expanding containers */
+body,
+button,
+input,
+textarea,
+select,
+a,
+h1,
+h2,
+h3,
+p,
+span,
+strong,
+small {
+  overflow-wrap: break-word;
+}
